@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Autenticação no Firebase - Bianca Viana!</title> 
+        <link rel="icon" type="image/png" href="images/logo.png" />    
+        <meta charset="utf-8">      
+               
+        <link rel="stylesheet" type="text/css" href="styles/style.css"/> 
+
+    </head>
+
+
+    <body id="bodyall">
+
+        <div id="caixa">
+
+            <h1>Seja bem-vindo(a)!</h1>
+            <h4>Entre ou realize seu cadastro no sistema:</h4> <br>       
+
+            <section id="usuario">
+               
+                <form>
+                    <label>Seu email:</label><br>
+                    <input type="email" id="email" placeholder="Digite o seu e-mail">
+
+                    <br> <br> 
+
+                    <label>Sua senha:</label><br>
+                    <input type="password" id="password1" placeholder="Digite sua senha"> <br> <br> <br>
+                    <!-- <input type="password" id="confirmpassword1" placeholder="Confirme a sua senha"> -->
+
+                    <input class="btns" type="submit" value="Entrar" onclick="autenticacacaousuario(event);">
+                    <input class="btns" type="submit" value="Criar conta" onclick="criarusuario(event);"> <br> <br>
+                    
+
+                    <a href="javascript:void(0)" class="resetar">Esqueceu sua senha?</a>
+
+                     <div class="user" style="display:none;">
+                        <p>Olá, <span class="name"></span> <a href="javascript:void(0)" class="sair">Sair</a></p>      
+                     </div> 
+                </form>
+            </section>            
+        </div>    
+        
+        
+
+        <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-auth.js"></script>
+
+        <script type="text/javascript" src="scripts/env.js"></script>
+        <script type="text/javascript" src="scripts/script.js"></script> 
+
+    </body>
+
+</html>   

@@ -1,0 +1,15 @@
+{
+  "name": "aula12",
+  "version": "1.0.0",
+  "description": "Exercícios AULA 12 - Objetos e Vetores",
+  "main": "index.html",
+  "scripts": {
+    "start": "lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bianca Viana",
+  "license": "MIT",
+  "dependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
