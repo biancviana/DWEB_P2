@@ -1,22 +1,19 @@
-let inputProblemas = document.getElementById("problema");
-let inputLocal = document.getElementById("local");
+let description = document.getElementById('description');
+let place = document.getElementById('place');
 
 const bd = firebase.database();
 
-var btnbd = document.getElementById("btnbd"); 
+var registerButton = document.getElementById('register-button');
 
-btnbd.addEventListener("click", function() {
-    var id = bd.ref().child("problema").push().key; //referência ao firebase. o (.child) é o filho da autenticação (problema).
+registerButton.addEventListener('click', function () {
+  var id = bd.ref().child('problema').push().key; //referência ao firebase. o (.child) é o filho da autenticação (problema).
 
-    let problema = {
-        problemas: inputProblemas.value, 
-        local: inputLocal.value 
-    };
+  let problema = {
+    problemas: description.value,
+    local: place.value,
+  };
 
-    bd.ref("problema/" + id).set(problema); // o "/" é dentro do problema, ou seha, ele está setando o objeto "problema" acima dentro da tabela problema lá no firebase.
+  bd.ref('problema/' + id).set(problema); // o "/" é dentro do problema, ou seha, ele está setando o objeto "problema" acima dentro da tabela problema lá no firebase.
 
-
-    alert("Seu problema foi cadastrado com sucesso!");
-
-})
-
+  alert('Seu problema foi cadastrado com sucesso!');
+});

@@ -1,75 +1,149 @@
-function criarusuario(event){ //traz todas as variáveis do formulário
-    event.preventDefault();
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password1").value;
+const signInButton = document.getElementById('nav-sign-in');
+const signUpButton = document.getElementById('nav-sign-up');
 
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then (result => {
-                alert("Tudo pronto por aqui. Sua conta foi criada com sucesso!");
-                console.log(result);
+const createIssueButton = document.getElementById('nav-create-issue');
+const myIssuesButton = document.getElementById('nav-my-issues');
+const signOutButton = document.getElementById('nav-sign-out');
 
-                //confirmação do usuário via e-mail cadastrado.
-                const user = result.user;
+const email = document.getElementById('input-email');
+const password = document.getElementById('input-password');
+const errorMessage = document.getElementById('error-message');
 
-                user.updateProfile({ displayName: "Bianca Viana e Gabriel Willian"});
-                console.log(user);
+function openSignInUpModal(modalType) {
+  const button = document.getElementById('sign-in-up-button');
 
-                user.sendEmailVerification().then(r => {
-                    alert("Um e-mail de verificação foi enviado. Verifique na sua caixa de entrada!"); 
-                }).catch(e => alert("Houve um erro ao enviar o e-mail!"));
-            }).catch (err => {
-                    alert("Ops, tivemos um erro ao criar sua conta!");
-                    console.log(err);
-                });
-};
-    
+  if (modalType === 'signIn') {
+    button.onclick = () => {
+      authUser();
+    };
+    button.textContent = 'Entrar';
 
-function autenticacacaousuario(event){
-    event.preventDefault();
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password1").value;
+    document.getElementById('sign-in-up-modal-title').textContent = 'Entrar';
+  } else {
+    button.onclick = () => {
+      createUser();
+    };
+    button.textContent = 'Criar Conta';
 
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .then (result => {
-            window.location.href = "home.html";
-            console.log(result);
-        }).catch (err => {
-            alert("Ops, não foi possível logar!");
-            console.error(err);
+    document.getElementById('sign-in-up-modal-title').textContent =
+      'Criar Conta';
+  }
+
+  $('#sign-in-up-modal').modal('toggle');
+  $('#sign-in-up-modal').modal('show');
+}
+
+function createUser() {
+  //traz todas as variáveis do formulário
+
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(email.value, password.value)
+    .then((result) => {
+      showAlert('Tudo pronto por aqui. Sua conta foi criada com sucesso!');
+
+      //confirmação do usuário via e-mail cadastrado.
+      const user = result.user;
+
+      user.updateProfile({ displayName: 'Bianca Viana e Gabriel Willian' });
+      console.log(user);
+
+      closeModal();
+
+      user
+        .sendEmailVerification()
+        .then((r) => {
+          showAlert(
+            'Um e-mail de verificação foi enviado. Verifique na sua caixa de entrada!'
+          );
         })
-        
-};  
+        .catch((e) => alert('Houve um erro ao enviar o e-mail!'));
+    })
+    .catch((err) => {
+      setError(err.message + '!');
+    });
+}
 
+function authUser() {
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email.value, password.value)
+    .then((result) => {
+      closeModal();
+      showAlert(`Bem vindo, ${email.value.split('@')[0]}!`);
+
+      console.log(result);
+    })
+    .catch((err) => {
+      alert('Ops, não foi possível logar!');
+      console.error(err);
+    });
+}
+
+function forgotPassword() {
+  firebase
+    .auth()
+    .sendPasswordResetEmail(email.value)
+    .then((result) => {
+      setError(
+        'Um link para redefinir sua senha foi enviado. Verifique na sua caixa de entrada!'
+      );
+    })
+    .catch((err) => setError(err.message));
+}
+
+function setError(message) {
+  errorMessage.hidden = false;
+  errorMessage.textContent = message;
+}
+
+function clearError() {
+  errorMessage.hidden = true;
+  errorMessage.textContent = null;
+}
+
+function showAlert(message) {
+  const alert = document.getElementById('alert');
+
+  alert.classList.add('show');
+  alert.textContent = message;
+
+  setTimeout(() => {
+    alert.classList.remove('show');
+  }, 4000);
+}
+
+function closeModal() {
+  $('#sign-in-up-modal').modal('hide');
+}
 
 firebase.auth().onAuthStateChanged((user) => {
-
-    let email = document.getElementById("email").value;
-    const divUser = document.querySelector(".user")
-    const spanName = document.querySelector("span.name");
-    const btnsair = document.querySelector(".sair");
-    const btnresetar = document.querySelector(".resetar");
-
-    if(user) {
-        spanName.innerHTML = user.email;
-        divUser.style.display = "block";
-    } 
-    else
-    {
-        divUser.style.display = "none";
-    }
-
-    //botão de sair.
-    btnsair.addEventListener("click", () => {
-        firebase.auth().signOut();
-    });
-    
-
-    btnresetar.addEventListener("click", () => {
-        firebase.auth().sendPasswordResetEmail(email)
-        .then(result => {
-            alert("Um link para redefinir sua senha foi enviado. Verifique na sua caixa de entrada!");
-            console.log(result);
-        }).catch (err => console.log(err));
-    });
-
+  if (user) {
+    signInButton.classList.add('d-none');
+    signUpButton.classList.add('d-none');
+    createIssueButton.classList.remove('d-none');
+    myIssuesButton.classList.remove('d-none');
+    signOutButton.classList.remove('d-none');
+  } else {
+    signInButton.classList.remove('d-none');
+    signUpButton.classList.remove('d-none');
+    createIssueButton.classList.add('d-none');
+    myIssuesButton.classList.add('d-none');
+    signOutButton.classList.add('d-none');
+  }
 });
+
+function indexView() {
+  window.location.href = 'index.html';
+}
+
+function registerIssueView() {
+  window.location.href = 'registerIssue.html';
+}
+
+function myIssuesView() {}
+
+function signOut() {
+  indexView();
+  firebase.auth().signOut();
+}

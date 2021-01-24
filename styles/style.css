@@ -1,57 +1,17 @@
-#bodyall
-{
-    background-color:rgba(255, 255, 255, 0.856);
-    color: rgb(79, 28, 196);
+.content {
+  margin-top: 56px;
+  padding: 30px;
 }
 
-.alinhar
-{
-    padding: 10px;
-    text-align: center;
+.nav-link {
+  cursor: pointer;
 }
 
-input
-{
-    font-size: 20px;
-    width: 300px; 
-    height: 24px;
+a {
+  cursor: pointer;
 }
 
-label
-{
-    font-size:20px;
-    font-weight:bold;
-}
-
-.btns
-{
-	width: 150px; 
-    height: 28px;
-	background-color: rgba(78, 28, 196, 0.534);
-	border: 1px solid rgba(78, 28, 196, 0.534);
-	border-radius: 1px;
-    padding: 1px;
-    color:whitesmoke;
-
-}
-
-.btns:hover{
-    background-color:#bea3f57a; }
-
-
-* 
-{
-	font-family:Georgia, 'Times New Roman', Times, serif;    
-}
-
-
-#caixa
-{
-    background-color: rgba(233, 104, 18, 0.397);
-    width: 500px;
-    height: 400px;
-    margin: auto;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 17px;
-    text-align: center;
+.alert {
+  position: fixed;
+  margin-top: 66px;
 }
