@@ -1,4 +1,4 @@
-let description = document.getElementById('description');
+/* let description = document.getElementById('description');
 let place = document.getElementById('place');
 
 const bd = firebase.database();
@@ -16,4 +16,4 @@ registerButton.addEventListener('click', function () {
   bd.ref('problema/' + id).set(problema); // o "/" é dentro do problema, ou seha, ele está setando o objeto "problema" acima dentro da tabela problema lá no firebase.
 
   alert('Seu problema foi cadastrado com sucesso!');
-});
+});  */

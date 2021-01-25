@@ -83,13 +83,23 @@
         </caption>
         <thead>
           <tr>
-            <th scope="col" style="width: 45%">Título</th>
-            <th scope="col" style="width: 30%">Local</th>
-            <th scope="col" style="width: 15%">Autor</th>
-            <th scope="col" style="width: 10%">Status</th>
+            <th scope="col" style="width: 25%">Título</th>
+            <th scope="col" style="width: 20%">Local</th>
+            <th scope="col" style="width: 20%">Autor/ID</th>
+            <th scope="col" style="width: 20%">Foto</th>
+            <th scope="col" style="width: 20%">Status</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          <tr>
+            <th id="table" scope="row"></th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+        </tbody>
       </table>
     </div>
 
@@ -148,6 +158,11 @@
         </div>
       </div>
     </div>
+
+    <div>
+      <a onclick="listForum()" class="text-dark"
+              >Visualizar problemas já cadastrados!</a>
+    </div>          
 
     <div class="shadow footer bg-dark text-light">
       <p class="p-4 text-center mb-0">
@@ -218,7 +233,9 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-auth.js"></script>
+    
     <script type="text/javascript" src="scripts/env.js"></script>
     <script type="text/javascript" src="scripts/script.js"></script>
   </body>

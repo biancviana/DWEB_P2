@@ -147,3 +147,80 @@ function signOut() {
   indexView();
   firebase.auth().signOut();
 }
+
+
+/* ARMAZENAMENTO DE DADOS, UTILIZANDO CLOUD FIRESTORE:
+
+ - Cadastrando um problema com base no título, descrição detalhada, lugar e foto. */
+
+const registerButton = (event) => {
+  event.preventDefault();
+  let title = document.getElementById("title").value;
+  let description = document.getElementById("description").value;
+  let place = document.getElementById("place").value;
+  let photo = document.getElementById("photo").value; 
+
+  db.collection("Register").add({
+    title: title,
+    description: description,
+    place: place,
+    photo: photo,
+    status: "Cadastrado",
+  })
+  .then (function(docRef){
+    console.log("Formulário de problema cadastrado com sucesso!");
+    alert("Formulário de problema cadastrado com sucesso!");
+    console.log("Documento armazenado com ID: ", docRef.id);
+  })
+  .catch(function(error){
+    console.error("Erro ao cadastrar formulário! ", error);
+    alert("Erro ao cadastrar formulário! ", error);
+  });
+}
+
+
+// Listagem dos problemas cadastrados para a tela index.html, estilo fórum.
+
+function listForum()
+{
+  let tabela = document.getElementsByTagName("table")[0];
+  // let linha = tabela.insertRow(-1);
+  // let col0 = linha.insertCell(0);
+  // let col1 = linha.insertCell(1);
+  // let col2 = linha.insertCell(2);
+  // let col3 = linha.insertCell(3);
+  // let col4 = linha.insertCell(4);
+   
+
+  // col0.appendChild(document.createTextNode("Título"));
+  // col1.appendChild(document.createTextNode("Local"));
+  // col2.appendChild(document.createTextNode("Autor"));
+  // col3.appendChild(document.createTextNode("Foto"));
+  // col4.appendChild(document.createTextNode("Status"));
+
+  db.collection("Register").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          console.log(doc.data().title);
+          console.log(doc.data().place);
+          console.log(doc.id);
+          console.log(doc.data().photo);
+          console.log(doc.data().status);
+
+          let linha = tabela.insertRow(-1);
+          let col0 = linha.insertCell(0);
+          let col1 = linha.insertCell(1);
+          let col2 = linha.insertCell(2);
+          let col3 = linha.insertCell(3);
+          let col4 = linha.insertCell(4);
+
+          col0.appendChild(document.createTextNode(doc.data().title));
+          col1.appendChild(document.createTextNode(doc.data().place));
+          col2.appendChild(document.createTextNode(doc.id));
+          col3.appendChild(document.createTextNode(doc.data().photo));
+          col4.appendChild(document.createTextNode(doc.data().status));
+
+      });
+  });
+
+}
+
