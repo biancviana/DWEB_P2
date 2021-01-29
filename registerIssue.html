@@ -53,19 +53,23 @@
       <div class="form-group d-flex">
         <div class="w-50">
           <label for="title">Título</label>
-          <input type="text" class="form-control" id="title" />
+          <input type="text" class="form-control" id="title"/>
           <small id="emailHelp" class="form-text text-muted"
             >Descreva resumidamente o problema.</small
           >
         </div>
         <div class="w-75 ml-4">
           <label for="place">Local</label>
-          <input type="text" class="form-control" id="place" />
+          <input maxlength="100" type="text" class="form-control" id="place" />
         </div>
       </div>
       <div class="form-group">
         <label for="description">Descrição</label>
-        <textarea class="form-control" id="description" rows="7"></textarea>
+        <textarea maxlength="500" class="form-control" id="description" rows="7"></textarea>
+        <small id="emailHelp" class="form-text text-muted"
+            >Explique sobre o problema em menos de 500 caracteres.</small>
+
+
       </div>
       <div class="form-group d-flex align-items-end justify-content-between">
         <div>
