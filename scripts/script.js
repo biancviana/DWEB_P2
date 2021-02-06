@@ -40,7 +40,7 @@ function createUser() {
     .auth()
     .createUserWithEmailAndPassword(email.value, password.value)
     .then((result) => {
-      showAlert('Tudo pronto por aqui. Sua conta foi criada com sucesso!');
+      //showAlert('Tudo pronto por aqui. Sua conta foi criada com sucesso!');
 
       //confirmação do usuário via e-mail cadastrado.
       const user = result.user;
@@ -54,7 +54,8 @@ function createUser() {
         .sendEmailVerification()
         .then((r) => {
           showAlert(
-            'Um e-mail de verificação foi enviado. Verifique na sua caixa de entrada!'
+            'Um e-mail de verificação foi enviado. Verifique na sua caixa de entrada!',
+            2500
           );
         })
         .catch((e) => alert('Houve um erro ao enviar o e-mail!'));
@@ -70,7 +71,11 @@ function authUser() {
     .signInWithEmailAndPassword(email.value, password.value)
     .then((result) => {
       closeModal();
-      showAlert(`Bem vindo, ${email.value.split('@')[0]}!`);
+      showAlert(`Bem vindo, ${email.value.split('@')[0]}!`, 1000);
+
+      setTimeout(() => {
+        myIssuesView();
+      }, 1000);
 
       console.log(result);
     })
@@ -102,15 +107,15 @@ function clearError() {
   errorMessage.textContent = null;
 }
 
-function showAlert(message) {
-  const alert = document.getElementById('alert');
+function showAlert(message, timer) {
+  $('#alert-modal').modal('toggle');
+  $('#alert-modal').modal('show');
 
-  alert.classList.add('show');
-  alert.textContent = message;
+  document.getElementById('alert-modal-message').textContent = message;
 
   setTimeout(() => {
-    alert.classList.remove('show');
-  }, 4000);
+    $('#alert-modal').modal('hide');
+  }, timer);
 }
 
 function closeModal() {
@@ -143,6 +148,10 @@ function registerIssueView() {
 
 function myIssuesView() {
   window.location.href = 'myIssues.html';
+}
+
+function viewIssue() {
+  window.location.href = 'viewIssue.html';
 }
 
 function signOut() {
@@ -179,7 +188,3 @@ const registerButton = (event) => {
       alert('Erro ao cadastrar formulário! ', error);
     });
 };
-
-function viewIssue() {
-  window.location.href = 'viewIssue.html';
-}

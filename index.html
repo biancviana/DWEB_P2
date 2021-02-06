@@ -94,11 +94,18 @@
     </div>
 
     <div
-      id="alert"
-      class="ml-4 mr-4 alert alert-success fade fixed-top"
-      role="alert"
+      class="modal fade"
+      id="alert-modal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
     >
-      test
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body" id="alert-modal-message"></div>
+        </div>
+      </div>
     </div>
 
     <div class="modal fade" id="sign-in-up-modal" tabindex="-1" role="dialog">

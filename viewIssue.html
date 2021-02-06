@@ -33,15 +33,22 @@
         >
       </li>
       <li class="nav-item">
-        <a id="nav-create-issue" class="nav-link">Cadastrar problema</a>
+        <a
+          id="nav-create-issue"
+          class="nav-link d-none"
+          onclick="registerIssueView()"
+          >Cadastrar problema</a
+        >
       </li>
       <li class="nav-item">
-        <a id="nav-my-issues" class="nav-link" onclick="myIssuesView()"
+        <a id="nav-my-issues" class="nav-link d-none" onclick="myIssuesView()"
           >Meus problemas</a
         >
       </li>
       <li class="nav-item">
-        <a id="nav-sign-out" class="nav-link" onclick="signOut()">Sair</a>
+        <a id="nav-sign-out" class="nav-link d-none" onclick="signOut()"
+          >Sair</a
+        >
       </li>
     </ul>
   </div>
@@ -60,6 +67,16 @@
             <label class="ml-auto mb-0"
               >Status: <span id="status">Cadastrado</span></label
             >
+
+            <em
+              class="fas fa-edit ml-3 mr-2 mt-1"
+              onclick="updateIssueView()"
+            ></em>
+
+            <em
+              class="fas fa-trash-alt ml-2 mt-1"
+              onclick="openDeleteIssueModal()"
+            ></em>
           </div>
 
           <small id="userId" class="form-text text-muted mt-0"
@@ -87,7 +104,7 @@
         </div>
       </div>
 
-      <div id="system-anwser" class="hidden">
+      <div id="system-anwser">
         <hr class="mt-5 mb-4" />
 
         <div class="form-group d-flex">
@@ -105,6 +122,16 @@
           ></textarea>
         </div>
       </div>
+      <div class="w-25 ml-auto">
+        <button
+          type="button"
+          class="btn btn-dark w-100"
+          id="register-button"
+          onclick="answerIssue(event);"
+        >
+          Inserir Resposta
+        </button>
+      </div>
     </form>
   </div>
 </div>
@@ -113,6 +140,96 @@
   <p class="p-4 text-center mb-0">
     2021 &copy; Cadastro de Problemas - Feito por Gabriel Willian e Bianca Viana
   </p>
+</div>
+
+<div class="modal" id="delete-issue-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Excluir Problema</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir este problema?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-dark" onclick="deleteIssue()">
+          Continuar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="alert-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body" id="alert-modal-message"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="sign-in-up-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sign-in-up-modal-title">Criar Conta</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-signin">
+          <div class="form-group">
+            <label for="input-email">E-mail</label>
+            <input
+              type="email"
+              id="input-email"
+              class="form-control"
+              required=""
+              autofocus=""
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="input-password">Senha</label>
+            <input
+              type="password"
+              id="input-password"
+              class="form-control"
+              required=""
+            />
+          </div>
+        </form>
+        <span class="text-danger" id="error-message"></span>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="btn btn-lg btn-dark btn-block"
+          type="submit"
+          id="sign-in-up-button"
+        ></button>
+        <a onclick="forgotPassword()" class="text-dark">Esqueci minha senha</a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <link
@@ -139,6 +256,12 @@
 <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
 
+<script
+  src="https://kit.fontawesome.com/9eec8075e7.js"
+  crossorigin="anonymous"
+></script>
+
 <script type="text/javascript" src="scripts/env.js"></script>
 <script type="text/javascript" src="scripts/script.js"></script>
 <script type="text/javascript" src="scripts/bd.js"></script>
+<script type="text/javascript" src="scripts/viewIssue.js"></script>
