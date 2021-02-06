@@ -69,12 +69,14 @@
             >
 
             <em
-              class="fas fa-edit ml-3 mr-2 mt-1"
+              class="fas fa-edit ml-3 mr-2 mt-1 d-none"
+              id="update-issue-button"
               onclick="updateIssueView()"
             ></em>
 
             <em
-              class="fas fa-trash-alt ml-2 mt-1"
+              class="fas fa-trash-alt ml-2 mt-1 d-none"
+              id="delete-issue-button"
               onclick="openDeleteIssueModal()"
             ></em>
           </div>
@@ -104,7 +106,7 @@
         </div>
       </div>
 
-      <div id="system-anwser">
+      <div id="system-answer" class="d-none">
         <hr class="mt-5 mb-4" />
 
         <div class="form-group d-flex">
@@ -121,16 +123,16 @@
             disabled="true"
           ></textarea>
         </div>
-      </div>
-      <div class="w-25 ml-auto">
-        <button
-          type="button"
-          class="btn btn-dark w-100"
-          id="register-button"
-          onclick="answerIssue(event);"
-        >
-          Inserir Resposta
-        </button>
+        <div class="w-25 ml-auto">
+          <button
+            type="button"
+            class="btn btn-dark w-100 d-none"
+            id="answer-button"
+            onclick="answerIssue(event);"
+          >
+            Inserir Resposta
+          </button>
+        </div>
       </div>
     </form>
   </div>
