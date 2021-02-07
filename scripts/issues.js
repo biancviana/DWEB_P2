@@ -2,23 +2,20 @@ window.onload = () => {
   listIssues();
 
   setInterval(() => {
-  listIssues();
+    listIssues();
   }, 15000);
 };
 
 // Listagem dos problemas cadastrados.
- window.listIssues = function() {
+window.listIssues = function () {
   let search;
   var tableBody = document.getElementById('tableBody');
   var rowCount = tableBody.rows.length;
 
-  firebase.auth().onAuthStateChanged(function (user) 
-  {
+  firebase.auth().onAuthStateChanged(function (user) {
     if (tableBody.getAttribute('data-issue-type') === 'my-issues') {
       search = db.collection('Register').where('userId', '==', user.uid).get();
-    } 
-    else
-    {
+    } else {
       search = db.collection('Register').get();
     }
 
@@ -29,9 +26,25 @@ window.onload = () => {
         }
       }
 
+      const issues = [];
+
       querySnapshot.forEach((doc) => {
-        rowCount = tableBody.rows.length;
-        var row = tableBody.insertRow(rowCount - 1);
+        issues.push({
+          date: doc.data().date.toDate(),
+          description: doc.data().description,
+          title: doc.data().title,
+          email: doc.data().email,
+          place: doc.data().place,
+          status: doc.data().status,
+          userId: doc.data().userId,
+          issueId: doc.id,
+        });
+      });
+
+      issues.sort((a, b) => (a.date > b.date ? 1 : -1));
+
+      issues.forEach((issue) => {
+        var row = tableBody.insertRow(0);
         row.classList.add('tableRow');
         row.onclick = (event) => {
           viewIssue(event.target.getAttribute('data-issue-id'));
@@ -39,17 +52,21 @@ window.onload = () => {
 
         const col = [];
 
-        for (let index = 0; index < 4; index++) {
+        for (let index = 0; index < 5; index++) {
           col.push(row.insertCell(index));
-          col[index].setAttribute('data-issue-id', doc.id);
+          col[index].setAttribute('data-issue-id', issue.issueId);
         }
 
-        const formatedEmail = doc.data().email.split('@')[0];
+        const formatedEmail = issue.email.split('@')[0];
 
-        col[0].appendChild(document.createTextNode(doc.data().title));
-        col[1].appendChild(document.createTextNode(doc.data().place));
+        let options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const date = issue.date.toLocaleDateString('pt-BR', options);
+
+        col[0].appendChild(document.createTextNode(issue.title));
+        col[1].appendChild(document.createTextNode(issue.place));
         col[2].appendChild(document.createTextNode(formatedEmail));
-        col[3].appendChild(document.createTextNode(doc.data().status));
+        col[3].appendChild(document.createTextNode(date));
+        col[4].appendChild(document.createTextNode(issue.status));
 
         if (tableBody.getAttribute('data-issue-type') === 'my-issues') {
           col[2].classList.add('d-none');
@@ -57,10 +74,4 @@ window.onload = () => {
       });
     });
   });
-
-  // if (email == null || email == undefined || email == '') {
-  //   buscar = db.collection('Register').get(); // vai buscar tudo da tabela sem comparar com o email. ou seja, caso a pessoa não esteja cadastrada, ela verá a tabela completa de outros usuários.
-  // } else {
-  //   buscar = db.collection('Register').where('email', '==', email).get(); // aqui é feito uma busca direta com o email especificado. ou seja, se o email informado pelo usuário for igual ao email que está no localstorage (que foi autenticado - function authUser), será retornado uma tabela com os SEUS problemas, de acordo com o SEU email.
-  // }
-}
+};

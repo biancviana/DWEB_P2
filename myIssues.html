@@ -1,172 +1,163 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <title>Cadastro de Problemas</title>
-    <link rel="icon" type="image/png" href="images/problema1.png" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-      crossorigin="anonymous"
-    />
-
-    <link rel="stylesheet" type="text/css" href="styles/style.css" />
-  </head>
-
-  <body id="bodyall">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" onclick="indexView()">Cadastro de Problemas!</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbar-dropdown"
-        aria-controls="navbar-dropdown"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="collapse navbar-collapse justify-content-end"
-        id="navbar-dropdown"
-      >
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a
-              id="nav-sign-in"
-              class="nav-link"
-              onclick="openSignInUpModal('signIn')"
-              >Entrar</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              id="nav-sign-up"
-              class="nav-link"
-              onclick="openSignInUpModal('signUp')"
-              >Criar Conta</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              id="nav-create-issue"
-              class="nav-link d-none"
-              onclick="registerIssueView()"
-              >Cadastrar problema</a
-            >
-          </li>
-          <li class="nav-item active">
-            <a id="nav-my-issues" class="nav-link d-none">Meus problemas</a>
-          </li>
-          <li class="nav-item">
-            <a id="nav-sign-out" class="nav-link d-none" onclick="signOut()"
-              >Sair</a
-            >
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <div class="content">
-      <table class="table table-sm table-bordered">
-        <caption>
-          Registros de reclamações
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col" style="width: 55%">Título</th>
-            <th scope="col" style="width: 30%">Local</th>
-            <th scope="col" style="width: 15%">Status</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody" data-issue-type="my-issues"></tbody>
-      </table>
-    </div>
-
-    <div
-      id="alert"
-      class="ml-4 mr-4 alert alert-success fade fixed-top"
-      role="alert"
+<body id="bodyall">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" onclick="indexView()">Cadastro de Problemas!</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar-dropdown"
+      aria-controls="navbar-dropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
     >
-      test
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="collapse navbar-collapse justify-content-end"
+      id="navbar-dropdown"
+    >
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a
+            id="nav-sign-in"
+            class="nav-link"
+            onclick="openSignInUpModal('signIn')"
+            >Entrar</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            id="nav-sign-up"
+            class="nav-link"
+            onclick="openSignInUpModal('signUp')"
+            >Criar Conta</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            id="nav-create-issue"
+            class="nav-link d-none"
+            onclick="registerIssueView()"
+            >Cadastrar problema</a
+          >
+        </li>
+        <li class="nav-item active">
+          <a id="nav-my-issues" class="nav-link d-none">Meus problemas</a>
+        </li>
+        <li class="nav-item">
+          <a id="nav-sign-out" class="nav-link d-none" onclick="signOut()"
+            >Sair</a
+          >
+        </li>
+      </ul>
     </div>
+  </nav>
 
-    <div class="modal fade" id="sign-in-up-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="sign-in-up-modal-title">Criar Conta</h5>
-            <button type="button" class="close" data-dismiss="modal">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form class="form-signin">
-              <div class="form-group">
-                <label for="input-email">E-mail</label>
-                <input
-                  type="email"
-                  id="input-email"
-                  class="form-control"
-                  required=""
-                  autofocus=""
-                />
-              </div>
+  <div class="content">
+    <table class="table table-sm table-bordered">
+      <caption>
+        Registros de reclamações
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="width: 45%">Título</th>
+          <th scope="col" style="width: 30%">Local</th>
+          <th scope="col" style="width: 10%">Data</th>
+          <th scope="col" style="width: 15%">Status</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody" data-issue-type="my-issues"></tbody>
+    </table>
+  </div>
 
-              <div class="form-group">
-                <label for="input-password">Senha</label>
-                <input
-                  type="password"
-                  id="input-password"
-                  class="form-control"
-                  required=""
-                />
-              </div>
-            </form>
-            <span class="text-danger" id="error-message"></span>
-          </div>
-          <div class="modal-footer">
-            <button
-              class="btn btn-lg btn-dark btn-block"
-              type="submit"
-              id="sign-in-up-button"
-            ></button>
-            <a onclick="forgotPassword()" class="text-dark"
-              >Esqueci minha senha</a
-            >
-          </div>
+  <div
+    id="alert"
+    class="ml-4 mr-4 alert alert-success fade fixed-top"
+    role="alert"
+  >
+    test
+  </div>
+
+  <div class="modal fade" id="sign-in-up-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="sign-in-up-modal-title">Criar Conta</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-signin">
+            <div class="form-group">
+              <label for="input-email">E-mail</label>
+              <input
+                type="email"
+                id="input-email"
+                class="form-control"
+                required=""
+                autofocus=""
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="input-password">Senha</label>
+              <input
+                type="password"
+                id="input-password"
+                class="form-control"
+                required=""
+              />
+            </div>
+          </form>
+          <span class="text-danger" id="error-message"></span>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-lg btn-dark btn-block"
+            type="submit"
+            id="sign-in-up-button"
+          ></button>
+          <a onclick="forgotPassword()" class="text-dark"
+            >Esqueci minha senha</a
+          >
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="shadow footer bg-dark text-light">
-      <p class="p-4 text-center mb-0">
-        2021 &copy; Cadastro de Problemas - Feito por Gabriel Willian e Bianca
-        Viana
-      </p>
-    </div>
+  <div class="shadow footer bg-dark text-light">
+    <p class="p-4 text-center mb-0">
+      2021 &copy; Cadastro de Problemas - Feito por Gabriel Willian e Bianca
+      Viana
+    </p>
+  </div>
 
-    <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-storage.js"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+    crossorigin="anonymous"
+  />
 
-    <script type="text/javascript" src="scripts/env.js"></script>
-    <script type="text/javascript" src="scripts/script.js"></script>
-    <script type="text/javascript" src="scripts/issues.js"></script>
-  </body>
-</html>
+  <link rel="stylesheet" type="text/css" href="styles/style.css" />
+
+  <script
+    src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-storage.js"></script>
+
+  <script type="text/javascript" src="scripts/env.js"></script>
+  <script type="text/javascript" src="scripts/script.js"></script>
+  <script type="text/javascript" src="scripts/issues.js"></script>
+</body>
