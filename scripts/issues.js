@@ -27,12 +27,6 @@ function listIssues() {
       }
 
       querySnapshot.forEach((doc) => {
-        console.log(doc.data().title);
-        console.log(doc.data().place);
-        console.log(doc.id);
-        console.log(doc.data().photo);
-        console.log(doc.data().status);
-
         rowCount = tableBody.rows.length;
         var row = tableBody.insertRow(rowCount - 1);
         row.classList.add('tableRow');
@@ -53,6 +47,10 @@ function listIssues() {
         col[1].appendChild(document.createTextNode(doc.data().place));
         col[2].appendChild(document.createTextNode(formatedEmail));
         col[3].appendChild(document.createTextNode(doc.data().status));
+
+        if (tableBody.getAttribute('data-issue-type') === 'my-issues') {
+          col[2].classList.add('d-none');
+        }
       });
     });
   });

@@ -46,7 +46,6 @@ function createUser() {
       const user = result.user;
 
       user.updateProfile({ displayName: 'Bianca Viana e Gabriel Willian' });
-      console.log(user);
 
       closeModal();
 
@@ -77,12 +76,9 @@ function authUser() {
       setTimeout(() => {
         myIssuesView();
       }, 1000);
-
-      console.log(result);
     })
-    .catch((err) => {
-      alert('Ops, não foi possível logar!');
-      console.error(err);
+    .catch((error) => {
+      setError(error.message);
     });
 }
 
@@ -95,7 +91,7 @@ function forgotPassword() {
         'Um link para redefinir sua senha foi enviado. Verifique na sua caixa de entrada!'
       );
     })
-    .catch((err) => setError(err.message));
+    .catch((error) => setError(error.message));
 }
 
 function setError(message) {
