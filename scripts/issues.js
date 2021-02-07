@@ -37,7 +37,7 @@ function listIssues() {
         var row = tableBody.insertRow(rowCount - 1);
         row.classList.add('tableRow');
         row.onclick = (event) => {
-          viewIssue(event);
+          viewIssue(event.target.getAttribute('data-issue-id'));
         };
 
         const col = [];

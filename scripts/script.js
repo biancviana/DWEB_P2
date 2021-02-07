@@ -140,10 +140,9 @@ window.myIssuesView = function () {
   window.location.href = 'myIssues.html';
 };
 
-function viewIssue(event) {
-  window.location.href =
-    'viewIssue.html?id=' + event.target.getAttribute('data-issue-id');
-}
+window.viewIssue = function (issueId) {
+  window.location.href = 'viewIssue.html?id=' + issueId;
+};
 
 function signOut() {
   localStorage.removeItem('ID');

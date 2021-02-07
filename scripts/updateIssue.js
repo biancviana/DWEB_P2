@@ -68,7 +68,7 @@ function updateIssue() {
         .then(() => {
           showAlert('Problema atualizado com sucesso!', 2000);
           setTimeout(() => {
-            myIssuesView();
+            viewIssue(issueId);
           }, 2000);
         })
         .catch(function (error) {
@@ -78,7 +78,7 @@ function updateIssue() {
   } else {
     showAlert('Problema atualizado com sucesso!', 2000);
     setTimeout(() => {
-      myIssuesView();
+      viewIssue(issueId);
     }, 2000);
   }
 }
