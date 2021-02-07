@@ -8,9 +8,22 @@ window.onload = () => {
 
 // Listagem dos problemas cadastrados.
 function listIssues() {
-  db.collection('Register')
-    .get()
-    .then((querySnapshot) => {
+
+  let buscar;
+  let email = localStorage.getItem("ID");
+
+
+if (email == null || email == undefined || email == "")
+  {
+  buscar = db.collection('Register').get(); // vai buscar tudo da tabela sem comparar com o email. ou seja, caso a pessoa não esteja cadastrada, ela verá a tabela completa de outros usuários.
+  }
+
+else
+  {
+  buscar = db.collection('Register').where('email', '==', email).get(); // aqui é feito uma busca direta com o email especificado. ou seja, se o email informado pelo usuário for igual ao email que está no localstorage (que foi autenticado - function authUser), será retornado uma tabela com os SEUS problemas, de acordo com o SEU email.
+  }
+
+  buscar.then((querySnapshot) => {
       var tableBody = document.getElementById('tableBody');
       var rowCount = tableBody.rows.length;
 

@@ -71,6 +71,7 @@ function authUser() {
     .signInWithEmailAndPassword(email.value, password.value)
     .then((result) => {
       closeModal();
+      localStorage.setItem("ID", email.value);
       showAlert(`Bem vindo, ${email.value.split('@')[0]}!`, 1000);
 
       setTimeout(() => {
@@ -155,6 +156,7 @@ function viewIssue() {
 }
 
 function signOut() {
+  localStorage.removeItem("ID");
   indexView();
   firebase.auth().signOut();
 }
@@ -169,6 +171,7 @@ const registerButton = (event) => {
   let description = document.getElementById('description').value;
   let place = document.getElementById('place').value;
   let photo = document.getElementById('photo').value;
+  let email = localStorage.getItem("ID");
 
   db.collection('Register')
     .add({
@@ -177,6 +180,7 @@ const registerButton = (event) => {
       place: place,
       photo: photo,
       status: 'Cadastrado',
+      email: email,
     })
     .then(function (docRef) {
       console.log('Formulário de problema cadastrado com sucesso!');
