@@ -69,12 +69,20 @@ function authUser() {
     .auth()
     .signInWithEmailAndPassword(email.value, password.value)
     .then((result) => {
-      closeModal();
-      localStorage.setItem('ID', email.value);
+      closeModal();      
+      localStorage.setItem('ID', email.value);      
       showAlert(`Bem vindo, ${email.value.split('@')[0]}!`, 1000);
 
       setTimeout(() => {
-        myIssuesView();
+      if (email.value !== "admin@admin.com")
+      {        
+        myIssuesView()
+      }
+      else
+      {
+        listIssues();
+      }
+      
       }, 1000);
     })
     .catch((error) => {
@@ -115,6 +123,11 @@ firebase.auth().onAuthStateChanged((user) => {
     createIssueButton.classList.remove('d-none');
     myIssuesButton.classList.remove('d-none');
     signOutButton.classList.remove('d-none');
+    if (user.email === "admin@admin.com")
+    {
+      createIssueButton.classList.add('d-none');
+      myIssuesButton.classList.add('d-none');
+    }
   } else {
     signInButton.classList.remove('d-none');
     signUpButton.classList.remove('d-none');

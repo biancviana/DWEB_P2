@@ -5,6 +5,8 @@ const updateIssueButton = document.getElementById('update-issue-button');
 const deleteIssueButton = document.getElementById('delete-issue-button');
 const systemAnswerView = document.getElementById('system-answer');
 const answerButton = document.getElementById('answer-button');
+const systemAnswerStatus = document.getElementById('system-answer-status');
+const answerText = document.getElementById('answer');
 
 const title = document.getElementById('title');
 const place = document.getElementById('place');
@@ -28,8 +30,24 @@ window.onload = () => {
       status.textContent = issueInfo.data().status;
       userId.textContent = issueInfo.data().email.split('@')[0];
       description.textContent = issueInfo.data().description;
+      
 
       firebase.auth().onAuthStateChanged(function (user) {
+        if (user && user.email === "admin@admin.com" || issueInfo.data().answer)
+        {
+          systemAnswerView.classList.remove('d-none'); // remove a classe.
+        }
+        if (user && user.email === "admin@admin.com")
+        {
+          systemAnswerStatus.classList.remove('d-none');
+          answerButton.classList.remove('d-none');
+          answerText.disabled = false;
+        }
+        if (issueInfo.data().answer)
+        {
+          answerText.value = issueInfo.data().answer;
+        }
+        
         if (user && user.uid === issueInfo.data().userId) {
           updateIssueButton.classList.remove('d-none');
           deleteIssueButton.classList.remove('d-none');
@@ -82,7 +100,18 @@ function deleteIssue() {
     });
 }
 
-function answerIssue() {}
+function answerIssue() {
+  issue.update ({
+    answer: answerText.value 
+  })
+  .then(() => {
+    showAlert('Problema respondido com sucesso!', 2000);    
+  })
+  .catch(function (error) {
+    console.error('Erro ao responder! ', error);
+  });
+  
+}
 
 function updateIssueView() {
   window.location.href = 'updateIssue.html?id=' + issueId;

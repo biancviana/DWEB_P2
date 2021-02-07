@@ -109,14 +109,14 @@
         </div>
       </div>
 
-      <div id="system-answer" class="">
+      <div id="system-answer" class="d-none">
         <hr class="mt-5 mb-4" />
 
         <div class="form-group d-flex">
           <div class="w-100">
             <div class="d-flex align-items-center">
               <label class="mb-0">Resposta do Sistema</label>
-              <div class="d-flex flex-row ml-auto align-items-center">
+              <div id="system-answer-status" class="d-none d-flex flex-row ml-auto align-items-center">
                 <label for="exampleFormControlSelect1" class="mr-3 mb-0"
                   >Status:
                 </label>
@@ -145,7 +145,7 @@
         <div class="w-25 ml-auto">
           <button
             type="button"
-            class="btn btn-dark w-100"
+            class="btn btn-dark w-100 d-none"
             id="answer-button"
             onclick="answerIssue(event);"
           >

@@ -2,20 +2,23 @@ window.onload = () => {
   listIssues();
 
   setInterval(() => {
-    listIssues();
+  listIssues();
   }, 15000);
 };
 
 // Listagem dos problemas cadastrados.
-function listIssues() {
+ window.listIssues = function() {
   let search;
   var tableBody = document.getElementById('tableBody');
   var rowCount = tableBody.rows.length;
 
-  firebase.auth().onAuthStateChanged(function (user) {
+  firebase.auth().onAuthStateChanged(function (user) 
+  {
     if (tableBody.getAttribute('data-issue-type') === 'my-issues') {
       search = db.collection('Register').where('userId', '==', user.uid).get();
-    } else {
+    } 
+    else
+    {
       search = db.collection('Register').get();
     }
 
