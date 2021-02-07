@@ -62,7 +62,11 @@
       class="ml-auto mr-auto"
       alt=""
     />
-    <form id="content" class="d-none">
+    <form
+      id="content"
+      onsubmit="answerIssue(event); return false"
+      class="d-none"
+    >
       <div class="form-group d-flex">
         <div class="w-100">
           <div class="d-flex flex-row w-100">
@@ -116,18 +120,19 @@
           <div class="w-100">
             <div class="d-flex align-items-center">
               <label class="mb-0">Resposta do Sistema</label>
-              <div id="system-answer-status" class="d-none d-flex flex-row ml-auto align-items-center">
-                <label for="exampleFormControlSelect1" class="mr-3 mb-0"
-                  >Status:
-                </label>
+              <div
+                id="system-answer-status"
+                class="d-none d-flex flex-row ml-auto align-items-center"
+              >
+                <label for="select-status" class="mr-3 mb-0">Status: </label>
                 <select
                   style="width: 160px !important"
                   class="form-control w-25 ml-auto"
-                  id="exampleFormControlSelect1"
+                  id="select-status"
                 >
-                  <option>Cadastrado</option>
-                  <option>Em andamento</option>
-                  <option>Concluído</option>
+                  <option value="Cadastrado">Cadastrado</option>
+                  <option value="Em andamento">Em andamento</option>
+                  <option value="Concluído">Concluído</option>
                 </select>
               </div>
             </div>
@@ -140,14 +145,14 @@
             id="answer"
             rows="7"
             disabled="true"
+            required
           ></textarea>
         </div>
         <div class="w-25 ml-auto">
           <button
-            type="button"
+            type="submit"
             class="btn btn-dark w-100 d-none"
             id="answer-button"
-            onclick="answerIssue(event);"
           >
             Inserir Resposta
           </button>

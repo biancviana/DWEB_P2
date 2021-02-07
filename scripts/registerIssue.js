@@ -19,6 +19,7 @@ function registerIssue(event) {
         status: 'Cadastrado',
         userId: user.uid,
         email: user.email,
+        date: firebase.firestore.Timestamp.fromDate(new Date()),
       })
       .then((docRef) => {
         if (photo) {
