@@ -17,6 +17,22 @@
   >
     <ul class="navbar-nav">
       <li class="nav-item">
+        <a
+          id="nav-sign-in"
+          class="nav-link"
+          onclick="openSignInUpModal('signIn')"
+          >Entrar</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          id="nav-sign-up"
+          class="nav-link"
+          onclick="openSignInUpModal('signUp')"
+          >Criar Conta</a
+        >
+      </li>
+      <li class="nav-item">
         <a id="nav-create-issue" class="nav-link" onclick="registerIssueView()"
           >Cadastrar problema</a
         >
@@ -35,18 +51,34 @@
 
 <div class="content">
   <div class="p-4 bg-light border rounded">
-    <form>
+    <img
+      id="loading"
+      src="./images/loading.gif"
+      class="ml-auto mr-auto"
+      alt=""
+    />
+    <form
+      onsubmit="updateIssue(event); return false"
+      id="content"
+      class="d-none"
+    >
       <div class="form-group d-flex">
         <div class="w-50">
           <label for="title">Título</label>
-          <input type="text" class="form-control" id="title" />
+          <input type="text" class="form-control" id="title" required />
           <small id="emailHelp" class="form-text text-muted"
             >Descreva resumidamente o problema.</small
           >
         </div>
         <div class="w-75 ml-4">
           <label for="place">Local</label>
-          <input maxlength="100" type="text" class="form-control" id="place" />
+          <input
+            maxlength="100"
+            type="text"
+            class="form-control"
+            id="place"
+            required
+          />
         </div>
       </div>
       <div class="form-group">
@@ -56,6 +88,7 @@
           class="form-control"
           id="description"
           rows="7"
+          required
         ></textarea>
         <small id="emailHelp" class="form-text text-muted"
           >Explique sobre o problema em menos de 500 caracteres.</small
@@ -63,16 +96,20 @@
       </div>
       <div class="form-group d-flex align-items-end justify-content-between">
         <div>
-          <label for="photo">Insira uma foto</label>
-          <input type="file" class="form-control-file" id="photo" />
+          <div class="mb-5">
+            <label class="m-0">Anexo:</label>
+            <small
+              id="attach-not-found"
+              class="form-text text-muted mt-0 d-none"
+              >Nenhuma foto foi inserida</small
+            >
+            <img class="image" id="photo" src="" alt="" />
+          </div>
+          <label for="photo">Alterar foto</label>
+          <input type="file" class="form-control-file" id="newPhoto" />
         </div>
         <div class="w-25">
-          <button
-            type="button"
-            class="btn btn-dark w-100"
-            id="update-button"
-            onclick="updateIssue(event);"
-          >
+          <button type="submit" class="btn btn-dark w-100" id="update-button">
             Atualizar
           </button>
         </div>
@@ -85,6 +122,21 @@
   <p class="p-4 text-center mb-0">
     2021 &copy; Cadastro de Problemas - Feito por Gabriel Willian e Bianca Viana
   </p>
+</div>
+
+<div
+  class="modal fade"
+  id="alert-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body" id="alert-modal-message"></div>
+    </div>
+  </div>
 </div>
 
 <link
@@ -110,8 +162,8 @@
 <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-storage.js"></script>
 
 <script type="text/javascript" src="scripts/env.js"></script>
 <script type="text/javascript" src="scripts/script.js"></script>
-<script type="text/javascript" src="scripts/bd.js"></script>
 <script type="text/javascript" src="scripts/updateIssue.js"></script>

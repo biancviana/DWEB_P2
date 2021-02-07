@@ -56,17 +56,23 @@
 
 <div class="content">
   <div class="p-4 bg-light border rounded">
-    <form>
+    <img
+      id="loading"
+      src="./images/loading.gif"
+      class="ml-auto mr-auto"
+      alt=""
+    />
+    <form id="content" class="d-none">
       <div class="form-group d-flex">
         <div class="w-100">
           <div class="d-flex flex-row w-100">
-            <label id="title" class="mb-0">Título do problema</label>
+            <label id="title" class="mb-0"></label>
             <span class="ml-1 mr-1">|</span>
-            <label id="place" class="mb-0">Local do problema</label>
+            <label id="place" class="mb-0"></label>
 
             <label class="ml-auto mb-0"
-              >Status: <span id="status">Cadastrado</span></label
-            >
+              >Status: <span id="status"></span
+            ></label>
 
             <em
               class="fas fa-edit ml-3 mr-2 mt-1 d-none"
@@ -81,9 +87,7 @@
             ></em>
           </div>
 
-          <small id="userId" class="form-text text-muted mt-0"
-            >gabrielwilliandepaula@outlook.com</small
-          >
+          <small id="userId" class="form-text text-muted mt-0"></small>
         </div>
       </div>
       <div class="form-group">
@@ -97,21 +101,36 @@
       </div>
       <div class="form-group d-flex align-items-end justify-content-between">
         <div>
-          <label for="photo">Anexo:</label>
-          <img
-            class="image"
-            src="https://blog.emania.com.br/wp-content/uploads/2015/12/paisagem-tropical-wallpaper-1.jpg"
-            alt=""
-          />
+          <label class="m-0">Anexo:</label>
+          <small id="attach-not-found" class="form-text text-muted mt-0 d-none"
+            >Nenhuma foto foi inserida</small
+          >
+          <img class="image mt-3" id="photo" src="" alt="" />
         </div>
       </div>
 
-      <div id="system-answer" class="d-none">
+      <div id="system-answer" class="">
         <hr class="mt-5 mb-4" />
 
         <div class="form-group d-flex">
           <div class="w-100">
-            <label class="mb-0">Resposta do Sistema</label>
+            <div class="d-flex align-items-center">
+              <label class="mb-0">Resposta do Sistema</label>
+              <div class="d-flex flex-row ml-auto align-items-center">
+                <label for="exampleFormControlSelect1" class="mr-3 mb-0"
+                  >Status:
+                </label>
+                <select
+                  style="width: 160px !important"
+                  class="form-control w-25 ml-auto"
+                  id="exampleFormControlSelect1"
+                >
+                  <option>Cadastrado</option>
+                  <option>Em andamento</option>
+                  <option>Concluído</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -126,7 +145,7 @@
         <div class="w-25 ml-auto">
           <button
             type="button"
-            class="btn btn-dark w-100 d-none"
+            class="btn btn-dark w-100"
             id="answer-button"
             onclick="answerIssue(event);"
           >
@@ -257,6 +276,7 @@
 <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-storage.js"></script>
 
 <script
   src="https://kit.fontawesome.com/9eec8075e7.js"
@@ -265,5 +285,4 @@
 
 <script type="text/javascript" src="scripts/env.js"></script>
 <script type="text/javascript" src="scripts/script.js"></script>
-<script type="text/javascript" src="scripts/bd.js"></script>
 <script type="text/javascript" src="scripts/viewIssue.js"></script>

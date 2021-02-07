@@ -71,7 +71,7 @@ function authUser() {
     .signInWithEmailAndPassword(email.value, password.value)
     .then((result) => {
       closeModal();
-      localStorage.setItem("ID", email.value);
+      localStorage.setItem('ID', email.value);
       showAlert(`Bem vindo, ${email.value.split('@')[0]}!`, 1000);
 
       setTimeout(() => {
@@ -108,17 +108,6 @@ function clearError() {
   errorMessage.textContent = null;
 }
 
-function showAlert(message, timer) {
-  $('#alert-modal').modal('toggle');
-  $('#alert-modal').modal('show');
-
-  document.getElementById('alert-modal-message').textContent = message;
-
-  setTimeout(() => {
-    $('#alert-modal').modal('hide');
-  }, timer);
-}
-
 function closeModal() {
   $('#sign-in-up-modal').modal('hide');
 }
@@ -147,48 +136,32 @@ function registerIssueView() {
   window.location.href = 'registerIssue.html';
 }
 
-function myIssuesView() {
+window.myIssuesView = function () {
   window.location.href = 'myIssues.html';
-}
+};
 
-function viewIssue() {
-  window.location.href = 'viewIssue.html';
+function viewIssue(event) {
+  window.location.href =
+    'viewIssue.html?id=' + event.target.getAttribute('data-issue-id');
 }
 
 function signOut() {
-  localStorage.removeItem("ID");
+  localStorage.removeItem('ID');
   indexView();
   firebase.auth().signOut();
 }
 
-/* ARMAZENAMENTO DE DADOS, UTILIZANDO CLOUD FIRESTORE:
+window.showAlert = function (message, timer) {
+  $('#alert-modal').modal('toggle');
+  $('#alert-modal').modal('show');
 
- - Cadastrando um problema com base no título, descrição detalhada, lugar e foto. */
+  document.getElementById('alert-modal-message').textContent = message;
 
-const registerButton = (event) => {
-  event.preventDefault();
-  let title = document.getElementById('title').value;
-  let description = document.getElementById('description').value;
-  let place = document.getElementById('place').value;
-  let photo = document.getElementById('photo').value;
-  let email = localStorage.getItem("ID");
+  if (!timer) {
+    timer = 1000;
+  }
 
-  db.collection('Register')
-    .add({
-      title: title,
-      description: description,
-      place: place,
-      photo: photo,
-      status: 'Cadastrado',
-      email: email,
-    })
-    .then(function (docRef) {
-      console.log('Formulário de problema cadastrado com sucesso!');
-      alert('Formulário de problema cadastrado com sucesso!');
-      console.log('Documento armazenado com ID: ', docRef.id);
-    })
-    .catch(function (error) {
-      console.error('Erro ao cadastrar formulário! ', error);
-      alert('Erro ao cadastrar formulário! ', error);
-    });
+  setTimeout(() => {
+    $('#alert-modal').modal('hide');
+  }, timer);
 };

@@ -8,25 +8,18 @@ window.onload = () => {
 
 // Listagem dos problemas cadastrados.
 function listIssues() {
+  let search;
+  var tableBody = document.getElementById('tableBody');
+  var rowCount = tableBody.rows.length;
 
-  let buscar;
-  let email = localStorage.getItem("ID");
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (tableBody.getAttribute('data-issue-type') === 'my-issues') {
+      search = db.collection('Register').where('userId', '==', user.uid).get();
+    } else {
+      search = db.collection('Register').get();
+    }
 
-
-if (email == null || email == undefined || email == "")
-  {
-  buscar = db.collection('Register').get(); // vai buscar tudo da tabela sem comparar com o email. ou seja, caso a pessoa não esteja cadastrada, ela verá a tabela completa de outros usuários.
-  }
-
-else
-  {
-  buscar = db.collection('Register').where('email', '==', email).get(); // aqui é feito uma busca direta com o email especificado. ou seja, se o email informado pelo usuário for igual ao email que está no localstorage (que foi autenticado - function authUser), será retornado uma tabela com os SEUS problemas, de acordo com o SEU email.
-  }
-
-  buscar.then((querySnapshot) => {
-      var tableBody = document.getElementById('tableBody');
-      var rowCount = tableBody.rows.length;
-
+    search.then((querySnapshot) => {
       if (rowCount > 0) {
         for (let i = 0; i < rowCount; i++) {
           tableBody.deleteRow(0);
@@ -43,19 +36,30 @@ else
         rowCount = tableBody.rows.length;
         var row = tableBody.insertRow(rowCount - 1);
         row.classList.add('tableRow');
-        row.onclick = () => {
-          viewIssue();
+        row.onclick = (event) => {
+          viewIssue(event);
         };
 
-        let col0 = row.insertCell(0);
-        let col1 = row.insertCell(1);
-        let col2 = row.insertCell(2);
-        let col3 = row.insertCell(3);
+        const col = [];
 
-        col0.appendChild(document.createTextNode(doc.data().title));
-        col1.appendChild(document.createTextNode(doc.data().place));
-        col2.appendChild(document.createTextNode(doc.id));
-        col3.appendChild(document.createTextNode(doc.data().status));
+        for (let index = 0; index < 4; index++) {
+          col.push(row.insertCell(index));
+          col[index].setAttribute('data-issue-id', doc.id);
+        }
+
+        const formatedEmail = doc.data().email.split('@')[0];
+
+        col[0].appendChild(document.createTextNode(doc.data().title));
+        col[1].appendChild(document.createTextNode(doc.data().place));
+        col[2].appendChild(document.createTextNode(formatedEmail));
+        col[3].appendChild(document.createTextNode(doc.data().status));
       });
     });
+  });
+
+  // if (email == null || email == undefined || email == '') {
+  //   buscar = db.collection('Register').get(); // vai buscar tudo da tabela sem comparar com o email. ou seja, caso a pessoa não esteja cadastrada, ela verá a tabela completa de outros usuários.
+  // } else {
+  //   buscar = db.collection('Register').where('email', '==', email).get(); // aqui é feito uma busca direta com o email especificado. ou seja, se o email informado pelo usuário for igual ao email que está no localstorage (que foi autenticado - function authUser), será retornado uma tabela com os SEUS problemas, de acordo com o SEU email.
+  // }
 }
